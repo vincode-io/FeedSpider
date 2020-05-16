@@ -21,9 +21,6 @@ wikipedia_data_dir = 'wikipedia_data'
 os.makedirs(wikipedia_data_dir, exist_ok=True)
 
 # Download the all the files
-data_paths = []
-file_info = []
-
 for file in files_to_download:
     save_file = wikipedia_data_dir + '/' + file
 
