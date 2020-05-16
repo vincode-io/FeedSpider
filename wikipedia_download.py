@@ -28,7 +28,7 @@ for file in files_to_download:
     save_file = wikipedia_data_dir + '/' + file
 
     if not os.path.exists(save_file):
-        print('Downloading ' + file + '...')
+        print('Downloading ' + file)
         download_url = base_url + file
 
         r = requests.get(download_url, verify=True, stream=True)
