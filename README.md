@@ -1,6 +1,4 @@
-![Feed Curator Icon](images/Feed-Curator-Banner.png)
-
-# 
+# Feed Spider
 
 Feed Spider is a project designed to create a directory of RSS feeds.  It isn't intented to index all the web's RSS feeds.  Rather it is intended to give users a quick and easy way to find some blogs that they are interested in.
 
