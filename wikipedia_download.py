@@ -14,6 +14,7 @@ for file in soup_dump.find_all('li', {'class': 'file'}):
     if 'pages-articles' in text:
         files.append((text.split()[0], text.split()[1:]))
 
+#TODO: exclude the multistream articles before running next time
 files_to_download = [file[0] for file in files if '.xml-p' in file[0]]
 
 # Create the download directory
