@@ -83,12 +83,10 @@ class WikiXmlHandler(xml.sax.handler.ContentHandler):
         cursor = self._connection.cursor()
 
         def updateOrAddCategory(category):
-            print('trying to update ', category)
             query = 'update fs_category set article_count = article_count + 1 where name = %s'
             cursor.execute(query, (category,))
 
             if cursor.rowcount == 0:
-                print('trying to insert ', category)
                 query = 'insert into fs_category (name, article_count) values (%s, 1)'
                 cursor.execute(query, (category,))
 
@@ -108,26 +106,26 @@ class WikiXmlHandler(xml.sax.handler.ContentHandler):
         cursor.close()
 
 
-
 def process(wikifile):
     ''' Process a wikipedia dump file '''
 
+    print('Processing ', wikifile)
     handler = WikiXmlHandler()
     parser = xml.sax.make_parser()
     parser.setContentHandler(handler)
 
     for i, line in enumerate(subprocess.Popen(['bzcat'], stdin = open(wikifile), stdout = subprocess.PIPE).stdout):
         parser.feed(line)
-        if handler._pageCount > 50:
-            break
     
     handler.close_connection()
+    print('Done processing ', wikifile)
 
 #print('Starting process...')
 #process('wikipedia_data/enwiki-20200501-pages-articles26.xml-p42567203p42663461.bz2')
 #print('Done processing.')
 
 if __name__ == '__main__': 
+    print('Starting Import Categories...')
     wikipedia_data = 'wikipedia_data'
     wikifiles = []
     for f in listdir(wikipedia_data):
@@ -136,3 +134,4 @@ if __name__ == '__main__':
     executor = concurrent.futures.ProcessPoolExecutor(8)
     futures = [executor.submit(process, wikifile) for wikifile in wikifiles]
     concurrent.futures.wait(futures)
+    print('Import Categories done.')
