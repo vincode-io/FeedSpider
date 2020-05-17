@@ -15,6 +15,7 @@ This project is still in the inception phase.  As the architecuture and design o
 ## Development Environment
 
 - Python 3.8
+- bzcat
 - Postgresql 12.2
 - fastText 0.9.2
 
