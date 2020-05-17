@@ -120,10 +120,6 @@ def process(wikifile):
     handler.close_connection()
     print('Done processing ', wikifile)
 
-#print('Starting process...')
-#process('wikipedia_data/enwiki-20200501-pages-articles26.xml-p42567203p42663461.bz2')
-#print('Done processing.')
-
 if __name__ == '__main__': 
     print('Starting Import Categories...')
     wikipedia_data = 'wikipedia_data'
