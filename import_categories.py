@@ -34,10 +34,17 @@ class WikiXmlHandler(xml.sax.handler.ContentHandler):
             self.processText(self._values['title'], self._values['text'])
 
     def processText(self, title, text):
+        ''' Insert categories into the database '''
+
         parsed_article = mwparserfromhell.parse(text)
         categories = self.extract_categories(parsed_article)
-        print(title)
-        print(categories)
+
+        # TODO: insert into Categories and increment usage counts
+
+        if title.startswith('Category:'):
+            # TODO: add relationship inserts here...
+            print(self.strip_to_category(title))
+            print(categories)
 
     def strip_to_category(self, category):
         ''' Strip down to the bare category '''
