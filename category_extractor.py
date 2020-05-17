@@ -121,7 +121,7 @@ def process(wikifile):
     print('Done processing ', wikifile)
 
 if __name__ == '__main__': 
-    print('Starting Import Categories...')
+    print('Starting Category Extractor...')
     wikipedia_data = 'wikipedia_data'
     wikifiles = []
     for f in listdir(wikipedia_data):
@@ -130,4 +130,4 @@ if __name__ == '__main__':
     executor = concurrent.futures.ProcessPoolExecutor(8)
     futures = [executor.submit(process, wikifile) for wikifile in wikifiles]
     concurrent.futures.wait(futures)
-    print('Import Categories done.')
+    print('Category Extractor done.')
