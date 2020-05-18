@@ -22,6 +22,7 @@ class WikiXmlHandler(xml.sax.handler.ContentHandler):
                                             database = 'postgres')
         self._connection.autocommit = True
 
+
     def characters(self, content):
         '''Characters between opening and closing tags'''
         if self._current_tag:
@@ -83,16 +84,15 @@ class WikiXmlHandler(xml.sax.handler.ContentHandler):
         cursor = self._connection.cursor()
 
         def updateOrAddCategory(category):
-            query = 'update fs_category set article_count = article_count + 1 where name = %s'
+            query = 'UPDATE fs_category SET article_count = article_count + 1 WHERE name = %s'
             cursor.execute(query, (category,))
 
             if cursor.rowcount == 0:
-                query = 'insert into fs_category (name, article_count) values (%s, 1)'
+                query = 'INSERT INTO fs_category (name, article_count) VALUES (%s, 1)'
                 cursor.execute(query, (category,))
 
         for category in categories:
-            lower_category = category.lower()
-            updateOrAddCategory(lower_category)
+            updateOrAddCategory(category.lower())
 
         if title.startswith('Category:'):
             child_category = self.strip_to_category(title)
@@ -100,12 +100,30 @@ class WikiXmlHandler(xml.sax.handler.ContentHandler):
             updateOrAddCategory(lower_child_category)
             
             for category in categories:
-                query = '''insert into fs_category_relationship (fs_category_parent_id, fs_category_child_id) 
-                           select c1.id, c2.id from fs_category c1 cross join fs_category c2 where c1.name = %s and c2.name = %s'''
-                cursor.execute(query, (lower_category, lower_child_category))
+                query = '''INSERT INTO fs_category_relationship (fs_category_parent_id, fs_category_child_id) 
+                           SELECT c1.id, c2.id FROM fs_category c1 CROSS JOIN fs_category c2 WHERE c1.name = %s AND c2.name = %s
+                           ON CONFLICT DO NOTHING'''
+                cursor.execute(query, (category.lower(), lower_child_category))
 
         cursor.close()
 
+# def process(wikifile):
+#     ''' Process a wikipedia dump file '''
+
+#     print('Processing ', wikifile)
+#     handler = WikiXmlHandler()
+#     handler._wikifile = wikifile
+#     parser = xml.sax.make_parser()
+#     parser.setContentHandler(handler)
+
+#     with open(wikifile) as file_in:
+#         for line in file_in:
+#             # print(line)
+#             parser.feed(line)
+    
+#     print('Done processing ', wikifile)
+
+# process('mathematics.xml')
 
 def process(wikifile):
     ''' Process a wikipedia dump file '''
@@ -128,7 +146,7 @@ if __name__ == '__main__':
     for f in listdir(wikipedia_data):
         wikifiles.append(wikipedia_data + '/' + f)
 
-    executor = concurrent.futures.ProcessPoolExecutor(8)
+    executor = concurrent.futures.ProcessPoolExecutor(9)
     futures = [executor.submit(process, wikifile) for wikifile in wikifiles]
     concurrent.futures.wait(futures)
     print('Category Extractor done.')
