@@ -20,7 +20,7 @@ class WikiXmlHandler(xml.sax.handler.ContentHandler):
                                             host = '127.0.0.1',
                                             port = 5432,
                                             database = 'postgres')
-        self._connection.autocommit = False
+        self._connection.autocommit = True
 
     def characters(self, content):
         '''Characters between opening and closing tags'''
@@ -91,18 +91,19 @@ class WikiXmlHandler(xml.sax.handler.ContentHandler):
                 cursor.execute(query, (category,))
 
         for category in categories:
-            updateOrAddCategory(category)
+            lower_category = category.lower()
+            updateOrAddCategory(lower_category)
 
         if title.startswith('Category:'):
-            parentCategory = self.strip_to_category(title)
-            updateOrAddCategory(parentCategory)
+            child_category = self.strip_to_category(title)
+            lower_child_category = child_category.lower()
+            updateOrAddCategory(lower_child_category)
             
             for category in categories:
                 query = '''insert into fs_category_relationship (fs_category_parent_id, fs_category_child_id) 
                            select c1.id, c2.id from fs_category c1 cross join fs_category c2 where c1.name = %s and c2.name = %s'''
-                cursor.execute(query, (parentCategory,category))
+                cursor.execute(query, (lower_category, lower_child_category))
 
-        self._connection.commit()
         cursor.close()
 
 
@@ -117,8 +118,8 @@ def process(wikifile):
     for i, line in enumerate(subprocess.Popen(['bzcat'], stdin = open(wikifile), stdout = subprocess.PIPE).stdout):
         parser.feed(line)
     
-    handler.close_connection()
     print('Done processing ', wikifile)
+    handler.close_connection()
 
 if __name__ == '__main__': 
     print('Starting Category Extractor...')
