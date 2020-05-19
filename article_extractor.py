@@ -142,7 +142,6 @@ class WikiXmlHandler(xml.sax.handler.ContentHandler):
         trainingRecord += '\n'
 
         self._output_file.write(trainingRecord)
-        print(trainingRecord)
 
 
 def process(wikifile):
