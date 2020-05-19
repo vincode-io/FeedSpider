@@ -4,8 +4,8 @@
 -- Table Definition ----------------------------------------------
 
 CREATE TABLE fs_category_relationship (
-    fs_category_parent_id integer REFERENCES fs_category(id),
-    fs_category_child_id integer REFERENCES fs_category(id),
+    fs_category_parent_id integer REFERENCES fs_category(id) ON DELETE CASCADE,
+    fs_category_child_id integer REFERENCES fs_category(id) ON DELETE CASCADE,
     CONSTRAINT fs_category_relationship_pkey PRIMARY KEY (fs_category_parent_id, fs_category_child_id)
 );
 

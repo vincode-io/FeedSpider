@@ -91,10 +91,10 @@ class WikiXmlHandler(xml.sax.handler.ContentHandler):
                 query = 'INSERT INTO fs_category (name, article_count) VALUES (%s, 1)'
                 cursor.execute(query, (category,))
 
-        for category in categories:
+        for category in filter(lambda cat: cat not in ' by ', expression categories):
             updateOrAddCategory(category.lower())
 
-        if title.startswith('Category:'):
+        if title.startswith('Category:') and ' by ' not in title:
             child_category = self.strip_to_category(title)
             lower_child_category = child_category.lower()
             updateOrAddCategory(lower_child_category)
