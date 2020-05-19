@@ -6,7 +6,7 @@ import mwparserfromhell
 import psycopg2
 
 class WikiXmlHandler(xml.sax.handler.ContentHandler):
-    '''Content handleer for Wiki XML data using SAX'''
+    '''Content handler for Wiki XML data using SAX'''
     
     def __init__(self):
         xml.sax.handler.ContentHandler.__init__(self)
