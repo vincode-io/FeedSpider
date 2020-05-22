@@ -1,1 +1,0 @@
-delete from fs_category where name like '% by %'
