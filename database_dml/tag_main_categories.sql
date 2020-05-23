@@ -8,7 +8,7 @@ WITH RECURSIVE graph(id, name, depth, path, cycle) AS (
 		FROM fs_category c
 		INNER JOIN fs_category_relationship cr on c.id = cr.fs_category_child_id
 		INNER JOIN graph g ON g.id = cr.fs_category_parent_id
-		WHERE NOT cycle and g.depth < 2
+		WHERE NOT cycle and g.depth < 3
 )
 SELECT id FROM graph
-WHERE depth > 1)
+WHERE depth > 2)
