@@ -12,3 +12,4 @@ CREATE TABLE fs_category_relationship (
 -- Indices -------------------------------------------------------
 
 CREATE UNIQUE INDEX fs_category_relationship_pkey ON fs_category_relationship(fs_category_parent_id int4_ops,fs_category_child_id int4_ops);
+CREATE INDEX fs_category_relationship_child_id_idx ON fs_category_relationship(fs_category_child_id int4_ops);

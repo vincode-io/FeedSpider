@@ -5,8 +5,7 @@
 
 CREATE TABLE fs_category (
     id SERIAL PRIMARY KEY,
-    name text NOT NULL,
-    article_count integer NOT NULL,
+    name text NOT NULL UNIQUE,
     main_category boolean NOT NULL DEFAULT false
 );
 
@@ -14,3 +13,4 @@ CREATE TABLE fs_category (
 
 CREATE UNIQUE INDEX fs_category_pkey ON fs_category(id int4_ops);
 CREATE INDEX fs_category_name ON fs_category(name text_ops);
+CREATE UNIQUE INDEX fs_category_name_key ON fs_category(name text_ops);
