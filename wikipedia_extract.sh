@@ -9,7 +9,7 @@
 # - Keep tables. They're mostly garbage but can be removed later (remove "^!*").
 # - Remove disambiguation pages. Right now there is no use for them.
 
-INPUT=wikipedia_data/enwiki-20200501-pages-articles.xml.bz2
+INPUT=working_dir/enwiki-20200501-pages-articles.xml.bz2
 PROCESSES=10
 TEMPLATES=working_dir/wikiextractor_templates
 OUTPUT=working_dir/wikiextractor_output
