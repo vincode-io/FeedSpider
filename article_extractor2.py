@@ -80,7 +80,7 @@ def extract_process(process_number, jobs_queue):
             cursor.close()
 
             if len(mainCategories) == 0:
-                return            
+                continue            
 
             # Write out the training records
             trainingRecord = ''
@@ -106,8 +106,8 @@ def extract_process(process_number, jobs_queue):
 if __name__ == '__main__': 
     print('Starting Article Extractor 2...')
 
-    categories_file = 'working_dir/wikiextractor_output/AA/wiki_00.bz2'
-    process_count = 10
+    categories_file = 'working_dir/wikiextractor_output_articles.bz2'
+    process_count = 12
     maxsize = 10 * process_count
 
     max_spool_length = 10000
