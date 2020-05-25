@@ -28,6 +28,8 @@ if __name__ == '__main__':
     # feed_url = 'https://www.thisiscolossal.com/feed/'
     # feed_url = 'https://daringfireball.net/feeds/main'
     feed_url = 'https://onefoottsunami.com/feed/atom/'
+    # feed_url = 'https://mjtsai.com/blog/feed/'
+    # feed_url = 'https://go-van.com/feed/'
 
     model = fasttext.load_model('working_dir/trained_model.bin')
     r = requests.get(feed_url, timeout=5)
@@ -42,10 +44,11 @@ if __name__ == '__main__':
             for content in entry.content:
                 allContent += strip_tags(content.value)
 
-        cleanContent = re.sub("([.\!?,'/()])", " \1 ", allContent)
+        cleanContent = entry.title + ' ' + re.sub("([.\!?,'/()])", " \1 ", allContent)
         cleanerContent = cleanContent.lower().replace('\n', ' ')
         # print(cleanerContent)
         labels = model.predict(cleanerContent)
         print('')
         print(entry.title)
+        # print(labels)
         print(labels[0][0].replace('__label__', ''))

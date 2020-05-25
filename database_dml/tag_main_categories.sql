@@ -1,4 +1,4 @@
-update fs_category set main_category = true where id in (
+UPDATE fs_category SET main_category = TRUE WHERE id IN (
 WITH RECURSIVE graph(id, name, depth, path, cycle) AS (
 		SELECT id, '', 0 depth, ARRAY[id], false
 		FROM fs_category
@@ -8,7 +8,7 @@ WITH RECURSIVE graph(id, name, depth, path, cycle) AS (
 		FROM fs_category c
 		INNER JOIN fs_category_relationship cr on c.id = cr.fs_category_child_id
 		INNER JOIN graph g ON g.id = cr.fs_category_parent_id
-		WHERE NOT cycle and g.depth < 3
+		WHERE NOT cycle and g.depth < 4
 )
 SELECT id FROM graph
-WHERE depth > 2)
+WHERE depth > 3)

@@ -46,7 +46,7 @@ def extract_process(process_number, jobs_queue):
                 WHERE NOT cycle and depth < 5
         )
         SELECT DISTINCT name FROM graph
-        where main_category = true
+        WHERE main_category = true and depth = (SELECT min(depth) FROM graph WHERE main_category = TRUE)
         limit 5
     '''
 

@@ -10,5 +10,5 @@ WITH RECURSIVE graph(id, name, main_category, depth, path, cycle) AS (
 		WHERE NOT cycle and depth < 5
 )
 SELECT DISTINCT name FROM graph
-where main_category = true
+WHERE main_category = true AND depth = (SELECT min(depth) FROM graph WHERE main_category = TRUE)
 limit 5
