@@ -16,5 +16,5 @@ fi
 # Split the records out into a training group and a validation group
 awk -v lines=$(wc -l < $WORKING_DIR/extracted_articles.txt | awk '{print $1}') \
     -v fact=0.80 \
-    'NR <= lines * fact {print > "$WORKING_DIR/train.txt"; next} {print > "$WORKING_DIR/valid.txt"}' \
+    'NR <= lines * fact {print > "working_dir/train.txt"; next} {print > "working_dir/valid.txt"}' \
     $WORKING_DIR/extracted_articles.txt
