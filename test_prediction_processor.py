@@ -27,10 +27,11 @@ if __name__ == '__main__':
     # feed_url = 'https://inessential.com/xml/rss.xml'
     # feed_url = 'https://www.thisiscolossal.com/feed/'
     # feed_url = 'https://daringfireball.net/feeds/main'
-    feed_url = 'https://onefoottsunami.com/feed/atom/'
+    # feed_url = 'https://onefoottsunami.com/feed/atom/'
     # feed_url = 'https://mjtsai.com/blog/feed/'
     # feed_url = 'https://go-van.com/feed/'
     # feed_url = 'http://talkingpointsmemo.com/feed/all'
+    feed_url = 'http://www.theverge.com/rss/full.xml'
 
     model = fasttext.load_model('working_dir/trained_model.bin')
     r = requests.get(feed_url, timeout=5)
