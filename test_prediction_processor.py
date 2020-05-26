@@ -30,6 +30,7 @@ if __name__ == '__main__':
     feed_url = 'https://onefoottsunami.com/feed/atom/'
     # feed_url = 'https://mjtsai.com/blog/feed/'
     # feed_url = 'https://go-van.com/feed/'
+    # feed_url = 'http://talkingpointsmemo.com/feed/all'
 
     model = fasttext.load_model('working_dir/trained_model.bin')
     r = requests.get(feed_url, timeout=5)
@@ -44,7 +45,7 @@ if __name__ == '__main__':
             for content in entry.content:
                 allContent += strip_tags(content.value)
 
-        cleanContent = entry.title + ' ' + re.sub("([.\!?,'/()])", " \1 ", allContent)
+        cleanContent = entry.title + ' ' + re.sub(r'([.!?,\'/()])', r' \1 ', allContent)
         cleanerContent = cleanContent.lower().replace('\n', ' ')
         # print(cleanerContent)
         labels = model.predict(cleanerContent)
